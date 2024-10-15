@@ -1,9 +1,9 @@
 import React from "react";
 
-const  Button =  () =>
+const  Button =  ({onClick, value}) =>
 {
     return (
-        <button type={'submit'}>Add</button>
+        <button onClick={onClick} type={'submit'}>{value}</button>
     )
 }
 
