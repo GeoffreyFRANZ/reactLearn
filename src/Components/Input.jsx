@@ -1,10 +1,10 @@
 import React from "react";
 
 
-const Input = ({onchange}) =>
+const Input = ({type, onchange, item, index }) =>
 {
  return (
-   <input onChange={onchange} type="text" placeholder={'Ceci est un placeholder'} />
+   <input onChange={onchange} type={type} data-item={item} data-index={index} placeholder={'Ceci est un placeholder'} />
  );
 }
 

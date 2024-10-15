@@ -1,13 +1,18 @@
+import React, { useState } from "react";
 import logo from './logo.svg';
 import './App.css';
 import Input from "./Components/Input";
 import Button from "./Components/Button";
 import List from "./Components/List";
-import {useEffect, useState} from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Modals from "./Components/Modals";
+// import input from "./Components/Input";
+// import input from "./Components/Input";
+// import input from "./Components/Input";
 
 function App() {
 
-    const [objectifs,  setObject] =  useState([
+    const [objectifs, setObject] = useState([
         "Faire les courses",
         "Aller à la salle de sport 3 fois par semaine",
         "Monter à plus de 5000m d'altitude",
@@ -16,22 +21,40 @@ function App() {
         "Gagner en productivité",
         "Apprendre un nouveau langage",
         "Faire une mission en freelance",
-        "Organiser un meetupautour de la tech",
+        "Organiser un meetup autour de la tech",
         "Faire un triathlon",
-    ])
-    const [inputChanges, setInputChanges] = useState()
+    ]);
+    const [inputChanges, setInputChanges] = useState();
+    const [show, setShow] = useState(false);
+    const [selectedObjectif, setSelectedObjectif] = useState("");
+
+    const handleClose = () => setShow(false);
+    const handleShow = (objectif) => {
+        setSelectedObjectif(objectif);
+        setShow(true);
+    };
 
     const addObjectif = () => {
         setObject([...objectifs, inputChanges]);
         setInputChanges("");
-    }
-    const removeObjectif = (index)=>
-    {
-     const removed = objectifs.filter((_, i) => i !== index)
-        setObject(removed)
-    }
+    };
+
+    const removeObjectif = (index) => {
+        const removed = objectifs.filter((_, i) => i !== index);
+        setObject(removed);
+    };
+
     const handleChange = (e) => {
-        setInputChanges(e.currentTarget.value)
+        setInputChanges(e.currentTarget.value);
+    };
+
+    const edit = (e, index, item) => {
+
+        const  parentInput = e.currentTarget.parentNode.parentNode.children[1]
+        const input  = parentInput.children[0]
+        const object = [...objectifs];
+        object[index] = input.value;
+        setObject(object);
     }
 
     return (
@@ -52,10 +75,12 @@ function App() {
                     Learn React
                 </a>
                 <div className="App-components">
-                    <List  items={objectifs} removeObjectif={removeObjectif}/>
-                    <Input  onchange={handleChange} objectifs={objectifs}/>
-                    <Button onClick={addObjectif} items={objectifs} value={'add'} />
-                    <Button  value={'remove'} />
+                    {/*<Modals   />*/}
+                    <List show={show} handleClose={handleClose} items={objectifs} handleChow={handleShow}
+                          onChange={edit} removeObjectif={removeObjectif}/>
+                    <Input type={'text'} onchange={handleChange} objectifs={objectifs}/>
+                    <Button onClick={addObjectif} items={objectifs} value={'add'}/>
+
                 </div>
             </header>
         </div>
